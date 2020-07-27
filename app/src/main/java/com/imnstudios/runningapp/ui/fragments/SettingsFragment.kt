@@ -8,11 +8,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.other.Constants.KEY_NAME
 import com.imnstudios.runningapp.other.Constants.KEY_WEIGHT
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
-class SettingsFragment: Fragment(R.layout.fragment_settings) {
+@AndroidEntryPoint
+class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -22,13 +24,14 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         loadFieldsFromSharedPref()
         btnApplyChanges.setOnClickListener {
             val success = applyChangesToSharedPref()
-            if(success) {
+            if (success) {
                 Snackbar.make(view, "Saved changes", Snackbar.LENGTH_LONG).show()
             } else {
                 Snackbar.make(view, "Please fill out all the fields", Snackbar.LENGTH_LONG).show()
             }
         }
     }
+
 
     private fun loadFieldsFromSharedPref() {
         val name = sharedPreferences.getString(KEY_NAME, "")
@@ -37,18 +40,18 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
         etWeight.setText(weight.toString())
     }
 
-    private fun applyChangesToSharedPref(): Boolean {
-        val nameText = etName.text.toString()
-        val weightText = etWeight.text.toString()
-        if(nameText.isEmpty() || weightText.isEmpty()) {
-            return false
-        }
-        sharedPreferences.edit()
-            .putString(KEY_NAME, nameText)
-            .putFloat(KEY_WEIGHT, weightText.toFloat())
-            .apply()
-        val toolbarText = "Let's go $nameText"
-        requireActivity().tvToolbarTitle.text = toolbarText
-        return true
+private fun applyChangesToSharedPref(): Boolean {
+    val nameText = etName.text.toString()
+    val weightText = etWeight.text.toString()
+    if (nameText.isEmpty() || weightText.isEmpty()) {
+        return false
     }
+    sharedPreferences.edit()
+        .putString(KEY_NAME, nameText)
+        .putFloat(KEY_WEIGHT, weightText.toFloat())
+        .apply()
+    val toolbarText = "Let's go $nameText"
+    requireActivity().tvToolbarTitle.text = toolbarText
+    return true
+}
 }
