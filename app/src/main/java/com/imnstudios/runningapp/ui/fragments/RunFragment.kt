@@ -19,6 +19,7 @@ import com.imnstudios.runningapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSIO
 import com.imnstudios.runningapp.other.SortType
 import com.imnstudios.runningapp.other.TrackingUtility
 import com.imnstudios.runningapp.ui.MainActivity
+import com.imnstudios.runningapp.ui.MainActivity.Companion.auth
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,8 +40,11 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        GlobalScope.launch(Dispatchers.IO) {
-            syncFromFireStore()
+
+        if (auth.currentUser != null) {
+            GlobalScope.launch(Dispatchers.IO) {
+                syncFromFireStore()
+            }
         }
 
 
@@ -95,6 +99,7 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
     }
 
     private suspend fun syncFromFireStore() {
+
         val collectionReference: CollectionReference =
             MainActivity.firestoreDb.collection("Users6")
                 .document(MainActivity.auth.currentUser?.uid.toString())
@@ -105,6 +110,7 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
 
         for (i in list)
             viewModel.insertRun(i)
+
     }
 
     private fun setupRecyclerView() = rvRuns.apply {

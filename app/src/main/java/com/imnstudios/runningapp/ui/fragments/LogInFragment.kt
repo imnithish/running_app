@@ -60,6 +60,7 @@ class LogInFragment : Fragment(R.layout.fragment_login) {
         else
             login_button.show()
 
+
     }
 
     private fun login() {
