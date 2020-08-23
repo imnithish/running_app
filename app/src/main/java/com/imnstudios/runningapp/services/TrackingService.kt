@@ -97,9 +97,8 @@ class TrackingService : LifecycleService() {
         stopSelf()
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        intent?.let {
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        intent.let {
             when (it.action) {
                 ACTION_START_OR_RESUME_SERVICE -> {
                     if (isFirstRun) {
@@ -123,6 +122,7 @@ class TrackingService : LifecycleService() {
 
         return super.onStartCommand(intent, flags, startId)
     }
+
 
     private var isTimerEnabled = false
     private var lapTime = 0L
@@ -180,7 +180,7 @@ class TrackingService : LifecycleService() {
             set(curNotificationBuilder, ArrayList<NotificationCompat.Action>())
         }
 
-        if (!serviceKilled){
+        if (!serviceKilled) {
             curNotificationBuilder = baseNotificationBuilder
                 .addAction(R.drawable.ic_pause_black_24dp, notificationActionText, pendingIntent)
             notificationManager.notify(NOTIFICATION_ID, curNotificationBuilder.build())

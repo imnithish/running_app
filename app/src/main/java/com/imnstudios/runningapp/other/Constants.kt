@@ -29,4 +29,7 @@ object Constants {
     const val KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val KEY_NAME = "KEY_NAME"
     const val KEY_WEIGHT = "KEY_WEIGHT"
+
+
+    const val RC_SIGN_IN = 1
 }

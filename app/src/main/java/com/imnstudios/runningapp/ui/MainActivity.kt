@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.db.RunDao
 import com.imnstudios.runningapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
@@ -16,6 +17,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
-                when(destination.id){
+                when (destination.id) {
                     R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
                         bottomNavigationView.visibility = View.VISIBLE
                     else -> bottomNavigationView.visibility = View.GONE
@@ -43,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         print("hello world")
     }
 
-    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?){
-        if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT){
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if (intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
             navHostFragment.findNavController().navigate(R.id.action_global_trackingFragment)
         }
     }

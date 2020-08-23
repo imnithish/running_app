@@ -22,22 +22,22 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    @set:Inject
-    var isFirstAppOpen = true
+//    @set:Inject
+//    var isFirstAppOpen = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!isFirstAppOpen) {
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.setupFragment, true)
-                .build()
-            findNavController().navigate(
-                R.id.action_setupFragment_to_runFragment,
-                savedInstanceState,
-                navOptions
-            )
-        }
+//        if(!isFirstAppOpen) {
+//            val navOptions = NavOptions.Builder()
+//                .setPopUpTo(R.id.setupFragment, true)
+//                .build()
+//            findNavController().navigate(
+//                R.id.action_setupFragment_to_runFragment,
+//                savedInstanceState,
+//                navOptions
+//            )
+//        }
 
         tvContinue.setOnClickListener {
             val success = writePersonalDataToSharedPref()
