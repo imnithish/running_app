@@ -119,4 +119,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.5.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1'
 }

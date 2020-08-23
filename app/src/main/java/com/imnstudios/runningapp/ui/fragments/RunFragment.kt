@@ -11,15 +11,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.CollectionReference
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.adapters.RunAdapter
+import com.imnstudios.runningapp.db.Run
 import com.imnstudios.runningapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.imnstudios.runningapp.other.SortType
 import com.imnstudios.runningapp.other.TrackingUtility
+import com.imnstudios.runningapp.ui.MainActivity
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_run.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -31,6 +38,11 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            syncFromFireStore()
+        }
+
 
         val toolbarText = "Your Runs"
         requireActivity().tvToolbarTitle.text = toolbarText
@@ -80,6 +92,19 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         fab.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
+    }
+
+    private suspend fun syncFromFireStore() {
+        val collectionReference: CollectionReference =
+            MainActivity.firestoreDb.collection("Users6")
+                .document(MainActivity.auth.currentUser?.uid.toString())
+                .collection("Runs")
+
+        val list: MutableList<Run> =
+            collectionReference.get().await().toObjects(Run::class.java)
+
+        for (i in list)
+            viewModel.insertRun(i)
     }
 
     private fun setupRecyclerView() = rvRuns.apply {

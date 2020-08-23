@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.imnstudios.runningapp.R
@@ -12,6 +14,8 @@ import com.imnstudios.runningapp.other.Constants.KEY_NAME
 import com.imnstudios.runningapp.other.Constants.KEY_WEIGHT
 import com.imnstudios.runningapp.ui.MainActivity
 import com.imnstudios.runningapp.ui.MainActivity.Companion.auth
+import com.imnstudios.runningapp.ui.MainActivity.Companion.firestoreDb
+import com.imnstudios.runningapp.ui.viewmodels.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -22,6 +26,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    private val viewModel: StatisticsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,6 +48,34 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         btnLogOut.setOnClickListener {
             logOut()
 
+        }
+
+        btnSync.setOnClickListener {
+            syncToFirebase()
+        }
+    }
+
+    private fun syncToFirebase() {
+        if (auth.currentUser != null) {
+
+            viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+                it?.let {
+
+                    for (i in it) {
+                        firestoreDb.collection("Users")
+                            .document(auth.currentUser?.uid.toString())
+                            .collection("Runs")
+                            .document(i.id.toString())
+                            .set(i)
+
+                    }
+
+                }
+            })
+
+
+        } else {
+            Snackbar.make(base_layout, "Something's wrong", Snackbar.LENGTH_LONG).show()
         }
     }
 

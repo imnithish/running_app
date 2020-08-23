@@ -8,6 +8,8 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.db.RunDao
 import com.imnstudios.runningapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
@@ -20,12 +22,17 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var auth: FirebaseAuth
+        lateinit var firestoreDb: FirebaseFirestore
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        firestoreDb = FirebaseFirestore.getInstance()
+        val firebaseSettings: FirebaseFirestoreSettings =
+            FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
+        firestoreDb.firestoreSettings = firebaseSettings
         setContentView(R.layout.activity_main)
 
         navigateToTrackingFragmentIfNeeded(intent)
