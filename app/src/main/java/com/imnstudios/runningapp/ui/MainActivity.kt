@@ -19,12 +19,13 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+        lateinit var auth: FirebaseAuth
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         setContentView(R.layout.activity_main)
 
         navigateToTrackingFragmentIfNeeded(intent)
@@ -35,9 +36,14 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
+                    R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment -> {
                         bottomNavigationView.visibility = View.VISIBLE
-                    else -> bottomNavigationView.visibility = View.GONE
+                        appBarLayout.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        bottomNavigationView.visibility = View.GONE
+                        appBarLayout.visibility = View.GONE
+                    }
                 }
             }
     }

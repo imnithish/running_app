@@ -1,6 +1,7 @@
 package com.imnstudios.runningapp.ui.fragments
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -17,12 +18,23 @@ import com.imnstudios.runningapp.other.hide
 import com.imnstudios.runningapp.other.show
 import com.imnstudios.runningapp.other.snackbar
 import com.imnstudios.runningapp.ui.MainActivity.Companion.auth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
 import timber.log.Timber
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class LogInFragment : Fragment(R.layout.fragment_login) {
 
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+
     lateinit var mGoogleSignInClient: GoogleSignInClient
+
+
+    @set:Inject
+    var isFirstAppOpen = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +54,8 @@ class LogInFragment : Fragment(R.layout.fragment_login) {
 
     override fun onStart() {
         super.onStart()
-        if (auth.currentUser != null)
+
+        if (auth.currentUser != null && !isFirstAppOpen)
             findNavController().navigate(R.id.action_logInFragment_to_runFragment)
         else
             login_button.show()

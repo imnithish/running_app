@@ -4,15 +4,14 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.imnstudios.runningapp.other.Constants.KEY_NAME
 import com.imnstudios.runningapp.other.Constants.KEY_WEIGHT
+import com.imnstudios.runningapp.ui.MainActivity.Companion.auth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_setup.*
 import javax.inject.Inject
 
@@ -21,6 +20,9 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+
+    private lateinit var userName: String
 
 //    @set:Inject
 //    var isFirstAppOpen = true
@@ -39,6 +41,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 //            )
 //        }
 
+        userName = auth.currentUser?.displayName.toString()
+
+        val personalizedText = "Welcome!\n$userName"
+        tvWelcome.text = personalizedText
+
         tvContinue.setOnClickListener {
             val success = writePersonalDataToSharedPref()
             if (success) {
@@ -52,18 +59,18 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
     }
 
     private fun writePersonalDataToSharedPref(): Boolean {
-        val name = etName.text.toString()
+
         val weight = etWeight.text.toString()
-        if (name.isEmpty() || weight.isEmpty()) {
+        if (weight.isEmpty()) {
             return false
         }
         sharedPref.edit()
-            .putString(KEY_NAME, name)
+            .putString(KEY_NAME, userName)
             .putFloat(KEY_WEIGHT, weight.toFloat())
             .putBoolean(KEY_FIRST_TIME_TOGGLE, false)
             .apply()
-        val toolbarText = "Let's go, $name!"
-        requireActivity().tvToolbarTitle.text = toolbarText
+//        val toolbarText = "Let's go, $name!"
+//        requireActivity().tvToolbarTitle.text = toolbarText
         return true
     }
 }

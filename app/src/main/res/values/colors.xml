@@ -13,6 +13,11 @@
     <color name="md_blue_A200">#448AFF</color>
     <color name="md_blue_A400">#2979FF</color>
     <color name="md_blue_A700">#2962FF</color>
-    <color name="colorAccent">#FFE600</color>
+    <color name="colorAccent">#651FFF</color>
     <color name="errorColor">#D50000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="ash">#b2beb5</color>
+    <color name="black">#000000</color>
+    <color name="base_color">#651FFF</color>
 </resources>
