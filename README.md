@@ -13,11 +13,10 @@ This app is build based on Modern Android Libraries.
 * NAVIGATION COMPONENTS
 * GOOGLE MAPS API
 
-<img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_3.png?alt=media&token=c5148479-260a-4963-bbfc-7f093b4ae6f2" width="250"> 
-
-<img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_4.png?alt=media&token=72ef5524-de5a-4ae0-b735-14198ae28f53" width="250"> 
+<img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_3.png?alt=media&token=c5148479-260a-4963-bbfc-7f093b4ae6f2" width="250">               <img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_4.png?alt=media&token=72ef5524-de5a-4ae0-b735-14198ae28f53" width="250"> 
 
 <img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_5.png?alt=media&token=bc96154a-b066-4d72-b921-83cf2803f237" width="250"> 
+
 ## Download
 [Click here](https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/RunningAppv1.apk?alt=media&token=3089277f-a788-488d-849a-886a6772aa99)
 
@@ -41,5 +40,7 @@ This app is build based on Modern Android Libraries.
 
 ### Contact
 Contact me at +918907471155 or imnithish@live.com.
+
 [My Website](https://imnstudios.com/#/nitheeshag)
+
 Connect with me in [LinkedIn](https://www.linkedin.com/in/imnithish/)
