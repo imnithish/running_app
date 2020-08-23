@@ -20,6 +20,9 @@ This app is build based on Modern Android Libraries.
 ## Download
 [Click here](https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/RunningAppv1.apk?alt=media&token=3089277f-a788-488d-849a-886a6772aa99)
 
+## Contributing
+Pull requests are welcome.
+
 
 ## License
 ```
