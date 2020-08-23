@@ -28,6 +28,7 @@ import com.imnstudios.runningapp.services.Polylines
 import com.imnstudios.runningapp.services.TrackingService
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tracking.*
 import java.util.*
 import javax.inject.Inject
@@ -62,6 +63,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        val toolbarText = "RUN"
+        requireActivity().tvToolbarTitle.text = toolbarText
         mapView.onCreate(savedInstanceState)
 
 

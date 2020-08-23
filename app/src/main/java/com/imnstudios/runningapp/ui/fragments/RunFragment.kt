@@ -18,6 +18,7 @@ import com.imnstudios.runningapp.other.SortType
 import com.imnstudios.runningapp.other.TrackingUtility
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_run.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -30,6 +31,9 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbarText = "Your Runs"
+        requireActivity().tvToolbarTitle.text = toolbarText
 
         requestPermissions()
         setupRecyclerView()

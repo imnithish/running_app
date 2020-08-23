@@ -16,6 +16,7 @@ import com.imnstudios.runningapp.other.CustomMarkerView
 import com.imnstudios.runningapp.other.TrackingUtility
 import com.imnstudios.runningapp.ui.viewmodels.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import kotlin.math.round
 
@@ -26,6 +27,8 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbarText = "Statistics"
+        requireActivity().tvToolbarTitle.text = toolbarText
         subscribeToObservers()
         setupBarChart()
     }

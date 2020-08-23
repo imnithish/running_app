@@ -63,8 +63,7 @@
     </style>
 
     <style name="BottomNavTheme" parent="Widget.Design.BottomNavigationView">
-        <item name="fontFamily">@font/poppins</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/poppins_bold</item>
     </style>
 
 </resources>
