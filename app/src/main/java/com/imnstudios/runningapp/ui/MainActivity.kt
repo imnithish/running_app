@@ -40,10 +40,15 @@ class MainActivity : AppCompatActivity() {
                         bottomNavigationView.visibility = View.VISIBLE
                         appBarLayout.visibility = View.VISIBLE
                     }
-                    else -> {
+                    R.id.trackingFragment -> {
+                        bottomNavigationView.visibility = View.GONE
+                        appBarLayout.visibility = View.VISIBLE
+                    }
+                    R.id.logInFragment, R.id.setupFragment ->{
                         bottomNavigationView.visibility = View.GONE
                         appBarLayout.visibility = View.GONE
                     }
+
                 }
             }
     }

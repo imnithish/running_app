@@ -6,9 +6,11 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +25,10 @@
                 android:id="@+id/tvToolbarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Running App"
-                android:textSize="20sp"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center_vertical"
-                android:textColor="@android:color/white"
+                android:text="Running App"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -48,25 +49,27 @@
 
         <fragment
             android:id="@+id/navHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
 
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:theme="@style/BottomNavTheme"
         android:id="@+id/bottomNavigationView"
-        app:menu="@menu/bottom_nav_menu"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@color/white"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@drawable/bottom_nav_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

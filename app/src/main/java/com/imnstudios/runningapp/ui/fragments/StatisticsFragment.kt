@@ -84,19 +84,21 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             }
         })
 
-        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                val allAvgSpeeds =
-                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
-                val barDataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
-                    valueTextColor = Color.WHITE
-                    color = ContextCompat.getColor(requireContext(), R.color.colorAccent)
-                }
-                barChart.data = BarData(barDataSet)
-                barChart.marker =
-                    CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
-                barChart.invalidate()
-            }
-        })
+//        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                val allAvgSpeeds =
+//                    it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
+//                val barDataSet = BarDataSet(allAvgSpeeds, "Avg Speed Over Time").apply {
+//                    valueTextColor = Color.BLACK
+//                    color = ContextCompat.getColor(requireContext(), R.color.white)
+//                }
+//
+//                barChart.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+//                barChart.data = BarData(barDataSet)
+//                barChart.marker =
+//                    CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
+//                barChart.invalidate()
+//            }
+//        })
     }
 }

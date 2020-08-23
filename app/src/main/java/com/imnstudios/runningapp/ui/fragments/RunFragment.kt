@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -40,6 +41,15 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
             SortType.AVG_SPEED -> spFilter.setSelection(3)
             SortType.CALORIES_BURNED -> spFilter.setSelection(4)
         }
+
+        val adapter = ArrayAdapter.createFromResource(
+            requireActivity(),
+            R.array.filter_options,
+            R.layout.custom_spinner
+        ) // where array_name consists of the items to show in Spinner
+        adapter.setDropDownViewResource(R.layout.custom_spinner) // where custom-spinner is mycustom xml file.
+
+        spFilter.adapter = adapter
         spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 

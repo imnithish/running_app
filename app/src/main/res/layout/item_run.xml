@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:fontFamily="@font/poppins"
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRunImage" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:fontFamily="@font/poppins"
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRunImage" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:fontFamily="@font/poppins"
         android:id="@+id/tvDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,6 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRunImage" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:fontFamily="@font/poppins"
         android:id="@+id/tvAvgSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,6 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivRunImage" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:fontFamily="@font/poppins"
         android:id="@+id/tvCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
