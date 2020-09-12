@@ -18,7 +18,7 @@ This app is build based on Modern Android Libraries.
 <img src="https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/screenshot_5.png?alt=media&token=bc96154a-b066-4d72-b921-83cf2803f237" width="250"> 
 
 ## Download
-[Click here](https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/RunningAppv1.apk?alt=media&token=3089277f-a788-488d-849a-886a6772aa99)
+[Click here](https://firebasestorage.googleapis.com/v0/b/running-app-1747f.appspot.com/o/running-app.apk?alt=media&token=d73e7bd4-0299-4331-8117-afa1e6b91080)
 
 
 
