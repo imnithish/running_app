@@ -1,6 +1,10 @@
 package com.imnstudios.runningapp.ui.fragments
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -56,35 +60,47 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun syncToFirebase() {
-        if (auth.currentUser != null) {
 
-            viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
-                it?.let {
+        if (isInternetAvailable()){
+            if (auth.currentUser != null) {
 
-                    for (i in it) {
-                        firestoreDb.collection("Users")
-                            .document(auth.currentUser?.uid.toString())
-                            .collection("Runs")
-                            .document(i.id)
-                            .set(i)
+                viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+                    it?.let {
+
+                        for (i in it) {
+                            firestoreDb.collection("Users")
+                                .document(auth.currentUser?.uid.toString())
+                                .collection("Runs")
+                                .document(i.id)
+                                .set(i)
+
+                        }
 
                     }
-
-                }
-            })
+                })
 
 
-        } else {
-            Snackbar.make(base_layout, "Something's wrong", Snackbar.LENGTH_LONG).show()
+            } else {
+                Snackbar.make(base_layout, "Something's wrong", Snackbar.LENGTH_LONG).show()
+            }
+        }else{
+            Snackbar.make(base_layout, "No Internet", Snackbar.LENGTH_LONG).show()
         }
+
     }
 
     private fun logOut() {
-        auth.signOut()
-        sharedPreferences.edit()
-            .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)
-            .apply()
-        findNavController().navigate(R.id.action_settingsFragment_to_logInFragment)
+
+        if (isInternetAvailable()){
+            auth.signOut()
+            sharedPreferences.edit()
+                .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)
+                .apply()
+            findNavController().navigate(R.id.action_settingsFragment_to_logInFragment)
+        }else{
+            Snackbar.make(base_layout, "No Internet", Snackbar.LENGTH_LONG).show()
+        }
+
     }
 
 
@@ -108,5 +124,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 //    val toolbarText = "Let's go $nameText"
 //    requireActivity().tvToolbarTitle.text = toolbarText
         return true
+    }
+
+
+    private fun isInternetAvailable(): Boolean {
+
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val nw = connectivityManager.activeNetwork ?: return false
+        val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+        return when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
     }
 }
