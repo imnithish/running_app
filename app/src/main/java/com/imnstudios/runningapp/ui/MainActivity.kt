@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
+        bottomNavigationView.setOnNavigationItemReselectedListener { /* NO-OP */ }
 
         navHostFragment.findNavController()
             .addOnDestinationChangedListener { _, destination, _ ->
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         bottomNavigationView.visibility = View.GONE
                         appBarLayout.visibility = View.VISIBLE
                     }
-                    R.id.logInFragment, R.id.setupFragment ->{
+                    R.id.logInFragment, R.id.setupFragment -> {
                         bottomNavigationView.visibility = View.GONE
                         appBarLayout.visibility = View.GONE
                     }
