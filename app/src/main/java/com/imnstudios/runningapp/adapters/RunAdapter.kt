@@ -1,8 +1,11 @@
 package com.imnstudios.runningapp.adapters
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +14,11 @@ import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.db.Run
 import com.imnstudios.runningapp.other.TrackingUtility
 import kotlinx.android.synthetic.main.item_run.view.*
+import timber.log.Timber
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
 
@@ -51,7 +57,15 @@ class RunAdapter : RecyclerView.Adapter<RunAdapter.RunViewHolder>() {
     override fun onBindViewHolder(holder: RunViewHolder, position: Int) {
         val run = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(this).load(run.img).into(ivRunImage)
+
+            try {
+                val encodeByte: ByteArray = Base64.getDecoder().decode(run.img)
+                val bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+                Glide.with(this).load(bitmap).into(ivRunImage)
+            } catch (e: Exception) {
+                Timber.d(e.toString())
+            }
+
             val calender = Calendar.getInstance().apply {
                 timeInMillis = run.timestamp
             }

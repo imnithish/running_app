@@ -21,6 +21,7 @@ import com.imnstudios.runningapp.other.TrackingUtility
 import com.imnstudios.runningapp.ui.MainActivity
 import com.imnstudios.runningapp.ui.MainActivity.Companion.auth
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
+import com.imnstudios.runningapp.ui.viewmodels.NetworkViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_run.*
@@ -35,16 +36,23 @@ import pub.devrel.easypermissions.EasyPermissions
 class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionCallbacks {
 
     private val viewModel: MainViewModel by viewModels()
+    private val networkViewModel: NetworkViewModel by viewModels()
     private lateinit var runAdapter: RunAdapter
+
+    companion object{
+
+        val collectionReference: CollectionReference =
+            MainActivity.firestoreDb.collection("Users")
+                .document(auth.currentUser?.uid.toString())
+                .collection("Runs")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         if (auth.currentUser != null) {
-            GlobalScope.launch(Dispatchers.IO) {
-                syncFromFireStore()
-            }
+            syncFromFireStore()
         }
 
 
@@ -98,19 +106,8 @@ class RunFragment : Fragment(R.layout.fragment_run), EasyPermissions.PermissionC
         }
     }
 
-    private suspend fun syncFromFireStore() {
-
-        val collectionReference: CollectionReference =
-            MainActivity.firestoreDb.collection("Users6")
-                .document(MainActivity.auth.currentUser?.uid.toString())
-                .collection("Runs")
-
-        val list: MutableList<Run> =
-            collectionReference.get().await().toObjects(Run::class.java)
-
-        for (i in list)
-            viewModel.insertRun(i)
-
+    private fun syncFromFireStore() {
+        networkViewModel.syncDataToRoomFromFirestore()
     }
 
     private fun setupRecyclerView() = rvRuns.apply {

@@ -1,9 +1,12 @@
 package com.imnstudios.runningapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.get
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,7 +15,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.imnstudios.runningapp.R
 import com.imnstudios.runningapp.db.Run
@@ -24,12 +26,12 @@ import com.imnstudios.runningapp.other.Constants.POLYLINE_COLOR
 import com.imnstudios.runningapp.other.Constants.POLYLINE_WIDTH
 import com.imnstudios.runningapp.other.TrackingUtility
 import com.imnstudios.runningapp.services.Polyline
-import com.imnstudios.runningapp.services.Polylines
 import com.imnstudios.runningapp.services.TrackingService
 import com.imnstudios.runningapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tracking.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.round
@@ -200,6 +202,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetWorldReadable")
     private fun endRunAndSaveToDb() {
         map?.snapshot { bmp ->
             var distanceInMeters = 0
@@ -210,8 +214,24 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
                 round((distanceInMeters / 1000f) / (curTimeInMillis / 1000f / 60 / 60) * 10) / 10f
             val dateTimestamp = Calendar.getInstance().timeInMillis
             val caloriesBurned = ((distanceInMeters / 1000f) * weight).toInt()
+            val id = (System.currentTimeMillis() / 1000).toInt().toString()
+
+            //converting bitmap to string
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            val bitmapString = Base64.getEncoder().encodeToString(byteArray)
+
             val run =
-                Run(bmp, dateTimestamp, avgSpeed, distanceInMeters, curTimeInMillis, caloriesBurned)
+                Run(
+                    id,
+                    bitmapString,
+                    dateTimestamp,
+                    avgSpeed,
+                    distanceInMeters,
+                    curTimeInMillis,
+                    caloriesBurned
+                )
             viewModel.insertRun(run)
             Snackbar.make(
                 requireActivity().findViewById(R.id.rootView),

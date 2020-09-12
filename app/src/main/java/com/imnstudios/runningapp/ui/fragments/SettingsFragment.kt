@@ -65,7 +65,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         firestoreDb.collection("Users")
                             .document(auth.currentUser?.uid.toString())
                             .collection("Runs")
-                            .document(i.id.toString())
+                            .document(i.id)
                             .set(i)
 
                     }
